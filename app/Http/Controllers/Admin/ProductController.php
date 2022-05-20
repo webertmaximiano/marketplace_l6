@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
+use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
@@ -44,12 +45,13 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         //criando e salvando o produto na loja
         $data = $request->all();
 
-        $store = \App\Store::find($data['store']); //passa os dados por array ao model
+        //$store = \App\Store::find($data['store']); //passa os dados por array ao model
+        $store = auth()->user()->store;
         $store->products()->create($data);
 
         //mensagem da ação
@@ -89,7 +91,7 @@ class ProductController extends Controller
      * @param  int  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $product)
+    public function update(ProductRequest $request, $product)
     {
         $data = $request->all();
 

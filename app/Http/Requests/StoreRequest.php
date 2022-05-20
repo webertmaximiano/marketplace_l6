@@ -13,6 +13,7 @@ class StoreRequest extends FormRequest
      */
     public function authorize()
     {
+        //return Auth::check();
         return true; //true libera o acesso as rotas e false bloqueia
     }
 
@@ -24,10 +25,19 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'         => 'require',
-            'description'  => 'require | min:10',
-            'phone'        => 'require',
-            'mobile_phone' => 'require',
+            'name'         => 'required',
+            'description'  => 'required | min:10',
+            'phone'        => 'required',
+            'mobile_phone' => 'required',
+            'slug' => 'required',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'min' => 'Campo deve ter no minimo :min Caracteres',
+            'required' => 'Campo é obrigatório'
         ];
     }
 }
